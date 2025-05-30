@@ -35,3 +35,10 @@ export interface FirebaseUser {
   displayName: string | null;
   photoURL?: string | null;
 }
+
+export interface ImportantDate {
+  id: string;
+  date: string; // ISO string (YYYY-MM-DD for DayPicker compatibility, will be full ISO in storage)
+  description: string;
+  type: 'importantDate'; // To distinguish from tasks if ever combined
+}
