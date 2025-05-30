@@ -1,0 +1,3 @@
+This is a placeholder for favicon.ico.
+Replace this file with your actual favicon image.
+This file ensures the /public directory and the favicon path exist for Next.js.
