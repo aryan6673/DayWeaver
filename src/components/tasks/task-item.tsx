@@ -1,3 +1,4 @@
+
 'use client';
 
 import type { Task, TaskStatus } from '@/types';
@@ -6,7 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Edit3, MoreVertical, Trash2, CalendarDays, AlertTriangle, Zap } from 'lucide-react';
+import { Edit3, MoreVertical, Trash2, CalendarDays, AlertTriangle, Zap, ListChecks, CircleSlash } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { format, parseISO, isValid } from 'date-fns';
 
@@ -23,10 +24,6 @@ const statusConfig = {
   done: { label: 'Done', color: 'bg-green-500', icon: <ListChecks className="h-3 w-3 mr-1" /> },
   blocked: { label: 'Blocked', color: 'bg-red-500', icon: <CircleSlash className="h-3 w-3 mr-1" /> },
 };
-
-// Placeholder icons if not available in lucide-react
-const ListChecks = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 17l-4-4"/><path d="M15 7l-5 5"/><path d="M21 7l-9 9"/></svg>;
-const CircleSlash = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l14.14 14.14"/></svg>;
 
 export function TaskItem({ task, onStatusChange, onDelete, onEdit }: TaskItemProps) {
   const handleCheckboxChange = (checked: boolean) => {
