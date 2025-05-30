@@ -11,7 +11,7 @@ import {
   Settings,
   LifeBuoy,
   BarChart3, // Added BarChart3 import
-  // Removed Shuffle, GitFork, Mic
+  MessagesSquare, // Added for Talk to Founder
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
@@ -26,20 +26,20 @@ const mainNavItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/schedule/create', label: 'Create Schedule', icon: CalendarPlus },
   { href: '/tasks', label: 'My Tasks', icon: ListChecks },
-  { href: '/calendar', label: 'Calendar', icon: CalendarDays }, // Added Calendar
-  // Removed Reallocate Tasks, Breakdown Task, Meeting Prep
+  { href: '/calendar', label: 'Calendar', icon: CalendarDays },
   { href: '/analytics', label: 'Analytics', icon: BarChart3 },
 ];
 
 const secondaryNavItems = [
   { href: '/settings', label: 'Settings', icon: Settings },
   { href: '/help', label: 'Help & Support', icon: LifeBuoy },
+  { href: '/talk-to-founder', label: 'Talk to Founder', icon: MessagesSquare },
 ];
 
 export function SidebarNav() {
   const pathname = usePathname();
 
-  const renderNavItems = (items: typeof mainNavItems) =>
+  const renderNavItems = (items: typeof mainNavItems) => // Use a more general type or typeof secondaryNavItems if they differ
     items.map((item) => (
       <SidebarMenuItem key={item.href}>
         <Link href={item.href} legacyBehavior passHref>
