@@ -1,19 +1,18 @@
 ![Day Weaver Demo](https://raw.githubusercontent.com/aryan6673/DayWeaver/master/public/demo34.gif)
 
-Day Weaver is an intelligent, AI-powered personal assistant designed to help you master your schedule, manage tasks, and enhance your productivity. Built with a modern tech stack, it offers a seamless and intuitive experience for planning and organizing your day.
+Day Weaver is an AI-integrated productivity tool that helps users organize their day, prioritize tasks, and optimize time management through intelligent scheduling. Powered by AI algorithms, it dynamically suggests daily plans based on task urgency, deadlines, estimated durations, and user preferences. Ideal for students, professionals, and productivity nerds.
 
-**Project Link:** [github.com/aryan6673/dayweaver](https://github.com/aryan6673/dayweaver)
 
 ## ✨ Features
 
 Day Weaver comes packed with features to help you stay organized and achieve your goals:
 
-*   **🤖 AI-Powered Schedule Creation:** Describe your ideal day or goals in natural language, and let our AI craft a smart, segmented schedule with work and rest times.
-*   **📝 Comprehensive Task Management:** Create, view, update, delete, and track your daily to-dos. Filter tasks by status, priority, and search terms.
-*   **🧠 Intelligent Task Breakdown:** Input a large task and its deadline, and AI will break it down into manageable sub-tasks with estimated time allocations.
-*   **🔄 Dynamic Task Reallocation:** Life happens! If you need to reschedule, tell AI the reason, provide your current tasks, and it will intelligently reallocate them to new slots.
-*   **🎤 Meeting & Speech Preparation:** Input your calendar event and current tasks. AI will adjust your schedule, compress preparation times, and generate reminders and speaker checklists.
-*   **📊 Productivity Analytics:**
+*    AI-Powered Schedule Creation:** Describe your ideal day or goals in natural language, and let our AI craft a smart, segmented schedule with work and rest times.
+*    Comprehensive Task Management:** Create, view, update, delete, and track your daily to-dos. Filter tasks by status, priority, and search terms.
+*    Intelligent Task Breakdown:** Input a large task and its deadline, and AI will break it down into manageable sub-tasks with estimated time allocations.
+*    Dynamic Task Reallocation:** Life happens! If you need to reschedule, tell AI the reason, provide your current tasks, and it will intelligently reallocate them to new slots.
+*   🎤 Meeting & Speech Preparation:** Input your calendar event and current tasks. AI will adjust your schedule, compress preparation times, and generate reminders and speaker checklists.
+*   ** Productivity Analytics:**
     *   **Task Progress:** Visualize your task completion status with an intuitive pie chart.
     *   **Time Usage:** Understand how you spend your time across different activities with a weekly bar chart.
     *   **Efficiency Score:** Get a score based on task completion rates and deferments.
