@@ -3,7 +3,7 @@
 'use server';
 /**
  * @fileOverview This file defines a Genkit flow for creating a schedule based on natural language input.
- * It now also extracts actionable tasks from the schedule.
+ * It now also extracts actionable tasks with more structured properties from the schedule.
  *
  * - createSchedule - A function that takes a natural language description of a desired schedule
  *                    and returns a structured schedule text and a list of tasks.
@@ -24,9 +24,11 @@ const CreateScheduleInputSchema = z.object({
 export type CreateScheduleInput = z.infer<typeof CreateScheduleInputSchema>;
 
 const AITaskEntrySchema = z.object({
-  name: z.string().describe("The name of the task."),
+  name: z.string().describe("A concise name for the actionable task. Should be distinct and not a copy of large schedule text."),
   description: z.string().optional().describe("A brief description of the task."),
-  category: z.string().optional().describe("A suggested category for the task (e.g., Work, Study, Personal).")
+  category: z.string().optional().describe("A suggested category for the task (e.g., Work, Study, Personal, Exercise)."),
+  priority: z.enum(['low', 'medium', 'high']).optional().describe("The priority of the task ('low', 'medium', 'high'). Default to 'medium' if unsure."),
+  dueDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().describe("The suggested due date for the task in YYYY-MM-DD format, if inferable. Omit if not applicable or too general.")
 });
 
 const CreateScheduleOutputSchema = z.object({
@@ -35,7 +37,7 @@ const CreateScheduleOutputSchema = z.object({
     .describe(
       'A structured schedule generated based on the input description, including work and rest times. This is the main textual schedule.'
     ),
-  tasks: z.array(AITaskEntrySchema).optional().describe("A list of actionable tasks extracted or inferred from the schedule. This might be empty or undefined if no specific tasks are discernible. Focus on main activities.")
+  tasks: z.array(AITaskEntrySchema).optional().describe("A list of distinct, actionable tasks extracted or inferred from the schedule. Focus on main activities and break them down if necessary.")
 });
 export type CreateScheduleOutput = z.infer<typeof CreateScheduleOutputSchema>;
 
@@ -48,25 +50,31 @@ const createSchedulePrompt = ai.definePrompt({
   input: {schema: CreateScheduleInputSchema},
   output: {schema: CreateScheduleOutputSchema},
   prompt: `You are an AI-powered schedule assistant. Your job is to create a smart, segmented schedule with work and rest times based on the user's input.
-  Additionally, identify and list key actionable tasks from the schedule.
+  Additionally, identify and list key actionable, distinct tasks from the schedule. Tasks should be broken down into manageable items.
 
   User's desired schedule: {{{scheduleDescription}}}
 
   Instructions:
   1. Generate the overall schedule. This should be returned in the 'scheduleText' field.
-  2. From the generated schedule, extract key actionable tasks. For each task, provide:
-     - name: A concise name for the task.
-     - description: (Optional) A brief description.
+  2. From the generated schedule, extract key actionable and distinct tasks. Do not just copy large parts of the schedule text.
+     For each task, provide:
+     - name: A concise and specific name for the task (e.g., "Complete Chapter 3 Math exercises").
+     - description: (Optional) A brief, helpful description.
      - category: (Optional) A suggested category like "Study", "Work", "Personal", "Exercise".
+     - priority: (Optional) The priority of the task: 'low', 'medium', or 'high'. Default to 'medium' if unsure.
+     - dueDate: (Optional) A suggested due date in YYYY-MM-DD format if it can be clearly inferred from the schedule description (e.g., if the user mentions "for tomorrow" or "by Friday"). Omit if not clear.
   3. Return these tasks in the 'tasks' array. If no specific tasks can be identified, the 'tasks' array can be empty or omitted.
   4. Ensure the 'scheduleText' field contains the full, human-readable schedule.
-  5. Ensure the 'tasks' field contains the list of extracted tasks.
+  5. Ensure the 'tasks' field contains the list of extracted tasks with the specified properties.
 
   Example for 'tasks' array:
   [
-    { "name": "Review Physics Chapter 5", "description": "Focus on kinematics formulas.", "category": "Study" },
-    { "name": "Morning Jog", "category": "Exercise" }
+    { "name": "Review Physics Chapter 5", "description": "Focus on kinematics formulas.", "category": "Study", "priority": "high", "dueDate": "2024-08-15" },
+    { "name": "Morning Jog", "category": "Exercise", "priority": "medium" },
+    { "name": "Outline blog post", "description": "Draft main sections for the new article.", "category": "Work", "priority": "medium", "dueDate": "2024-08-16" }
   ]
+
+  Focus on creating tasks that are specific and actionable items that can be checked off a to-do list.
   `,
 });
 
@@ -81,3 +89,4 @@ const createScheduleFlow = ai.defineFlow(
     return output!;
   }
 );
+

@@ -15,6 +15,7 @@ import type { CreateScheduleOutput } from '@/ai/flows/create-schedule';
 import { IconSpinner } from '@/components/icons';
 import type { Task } from '@/types';
 import { getTasksFromLocalStorage, saveTasksToLocalStorage } from '@/lib/task-storage';
+import { isValid, parseISO } from 'date-fns';
 
 const formSchema = z.object({
   scheduleDescription: z.string().min(10, {
@@ -47,29 +48,54 @@ export function CreateScheduleForm() {
 
       if (result.tasks && result.tasks.length > 0) {
         const existingTasks = getTasksFromLocalStorage();
-        const newTasksFromAI: Task[] = result.tasks.map((aiTask, index) => ({
-          id: `ai-${Date.now()}-${index}`, // Simple unique ID
-          name: aiTask.name,
-          description: aiTask.description,
-          category: aiTask.category,
-          status: 'todo',
-          priority: 'medium',
-          // Ensure other required fields from Task type have defaults if necessary
-        }));
+        const newTasksFromAI: Task[] = result.tasks.map((aiTask, index) => {
+          let dueDateISO: string | undefined = undefined;
+          if (aiTask.dueDate) {
+            try {
+              const parsedDate = parseISO(aiTask.dueDate); // Handles YYYY-MM-DD
+              if (isValid(parsedDate)) {
+                dueDateISO = parsedDate.toISOString();
+              } else {
+                console.warn(`Invalid dueDate format from AI: ${aiTask.dueDate}`);
+              }
+            } catch (e) {
+              console.warn(`Error parsing dueDate from AI: ${aiTask.dueDate}`, e);
+            }
+          }
+
+          return {
+            id: `ai-${Date.now()}-${index}`, // Simple unique ID
+            name: aiTask.name,
+            description: aiTask.description,
+            category: aiTask.category,
+            priority: aiTask.priority || 'medium',
+            dueDate: dueDateISO,
+            status: 'todo',
+          };
+        });
         
         // Avoid adding duplicate tasks by name (simple check)
         const tasksToSave = [...existingTasks];
+        let addedCount = 0;
         newTasksFromAI.forEach(aiTask => {
           if (!existingTasks.some(existingTask => existingTask.name.toLowerCase() === aiTask.name.toLowerCase())) {
             tasksToSave.push(aiTask);
+            addedCount++;
           }
         });
 
-        saveTasksToLocalStorage(tasksToSave);
-        toast({
-          title: 'Tasks Added!',
-          description: `${newTasksFromAI.length} task(s) from the schedule have been added to your task list.`,
-        });
+        if (addedCount > 0) {
+          saveTasksToLocalStorage(tasksToSave);
+          toast({
+            title: 'Tasks Added!',
+            description: `${addedCount} task(s) from the schedule have been added to your task list.`,
+          });
+        } else if (newTasksFromAI.length > 0) {
+           toast({
+            title: 'Tasks Identified',
+            description: `AI identified ${newTasksFromAI.length} task(s), but they might already exist in your list.`,
+          });
+        }
       }
 
     } catch (error) {
@@ -89,9 +115,9 @@ export function CreateScheduleForm() {
         <CardTitle className="text-2xl">AI Schedule Creator</CardTitle>
         <CardDescription>
           Describe your ideal schedule, and let Day Weaver AI craft it for you.
-          Tasks identified by the AI will be automatically added to your "My Tasks" page.
-          Try something like: "Create a daily routine for a freelance writer working from home."
-          or "Plan my study schedule for upcoming final exams in Math and Physics."
+          Tasks identified by the AI (including priority and due date if applicable) will be automatically added to your "My Tasks" page.
+          Try something like: "Create a daily routine for a freelance writer working from home, who needs to finish a draft by Friday."
+          or "Plan my study schedule for upcoming final exams in Math (high priority) and Physics (medium priority) next week."
         </CardDescription>
       </CardHeader>
       <Form {...form}>
@@ -146,3 +172,4 @@ export function CreateScheduleForm() {
     </Card>
   );
 }
+
