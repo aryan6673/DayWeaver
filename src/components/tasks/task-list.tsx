@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -9,19 +10,19 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { PlusCircle, Search, Filter } from 'lucide-react';
+import { PlusCircle, Search, Filter, ListChecksIcon } from 'lucide-react'; // Changed ListChecks import for clarity
 import { useToast } from '@/hooks/use-toast';
+import { getTasksFromLocalStorage, saveTasksToLocalStorage } from '@/lib/task-storage';
+import { Card, CardContent } from '@/components/ui/card'; // Added Card imports
 
-// Sample initial tasks for demonstration
-const initialTasks: Task[] = [
-  { id: '1', name: 'Morning JEE Prep - Physics', description: 'Cover kinematics and Newton\'s laws.', dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(), priority: 'high', status: 'todo', category: 'Study' },
-  { id: '2', name: 'Client Project - Wireframes', description: 'Design wireframes for the new dashboard.', dueDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(), priority: 'medium', status: 'inprogress', category: 'Work' },
-  { id: '3', name: 'Write Blog Post', description: 'Draft article on AI productivity tools.', dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(), priority: 'medium', status: 'todo', category: 'Content Creation' },
-  { id: '4', name: 'Grocery Shopping', status: 'done', category: 'Personal' },
+// Sample initial tasks for demonstration - will be overridden by localStorage if present
+const fallbackInitialTasks: Task[] = [
+  { id: 'fallback-1', name: 'Welcome to Day Weaver!', description: 'Add your first task using the "Add Task" button.', dueDate: new Date().toISOString(), priority: 'medium', status: 'todo', category: 'General' },
 ];
 
 export function TaskList() {
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false); // To prevent flicker with localStorage
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<TaskStatus | 'all'>('all');
   const [priorityFilter, setPriorityFilter] = useState<'all' | 'low' | 'medium' | 'high'>('all');
@@ -33,8 +34,18 @@ export function TaskList() {
   const { toast } = useToast();
 
   useEffect(() => {
-    // This could be used to load tasks from localStorage or an API
+    const loadedTasks = getTasksFromLocalStorage();
+    setTasks(loadedTasks.length > 0 ? loadedTasks : fallbackInitialTasks);
+    setIsLoaded(true);
   }, []);
+
+  // Persist tasks to localStorage whenever the tasks array changes
+  useEffect(() => {
+    if (isLoaded) { // Only save after initial load to avoid overwriting
+      saveTasksToLocalStorage(tasks);
+    }
+  }, [tasks, isLoaded]);
+
 
   const handleStatusChange = (taskId: string, status: TaskStatus) => {
     setTasks(prevTasks =>
@@ -63,7 +74,7 @@ export function TaskList() {
   };
 
   const handleSaveTask = () => {
-    if (!newTask.name) {
+    if (!newTask.name?.trim()) {
       toast({ variant: 'destructive', title: 'Error', description: 'Task name is required.' });
       return;
     }
@@ -73,16 +84,16 @@ export function TaskList() {
       toast({ title: 'Task Updated', description: 'Your task has been successfully updated.'});
     } else {
       const taskToAdd: Task = {
-        id: String(Date.now()),
+        id: String(Date.now()), // Simple unique ID
         ...newTask,
+        name: newTask.name.trim(),
         status: newTask.status || 'todo',
-        name: newTask.name,
       };
       setTasks(prevTasks => [taskToAdd, ...prevTasks]);
       toast({ title: 'Task Added', description: 'New task successfully created.'});
     }
     setIsModalOpen(false);
-    setNewTask({ name: '', description: '', priority: 'medium', status: 'todo' });
+    setNewTask({ name: '', description: '', priority: 'medium', status: 'todo' }); // Reset form
     setEditingTask(null);
   };
 
@@ -93,6 +104,11 @@ export function TaskList() {
     const matchesPriority = priorityFilter === 'all' || task.priority === priorityFilter;
     return matchesSearchTerm && matchesStatus && matchesPriority;
   });
+
+  if (!isLoaded) {
+    // You can show a loader here if preferred
+    return <div className="text-center p-8">Loading tasks...</div>;
+  }
 
   return (
     <div className="space-y-6">
@@ -154,10 +170,10 @@ export function TaskList() {
       ) : (
         <Card className="text-center py-12">
           <CardContent>
-            <ListChecks className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
+            <ListChecksIcon className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
             <h3 className="text-xl font-semibold">No tasks found</h3>
             <p className="text-muted-foreground">
-              {tasks.length > 0 ? "Try adjusting your filters or search term." : "Get started by adding a new task!"}
+              {tasks.length > 0 ? "Try adjusting your filters or search term." : "Get started by adding a new task or creating an AI schedule!"}
             </p>
           </CardContent>
         </Card>
@@ -201,9 +217,23 @@ export function TaskList() {
               <Label htmlFor="taskCategory" className="text-right">Category</Label>
               <Input id="taskCategory" value={newTask.category || ''} onChange={(e) => setNewTask(prev => ({...prev, category: e.target.value}))} className="col-span-3" placeholder="e.g., Work, Study"/>
             </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="taskStatus" className="text-right">Status</Label>
+                <Select value={newTask.status || 'todo'} onValueChange={(value) => setNewTask(prev => ({...prev, status: value as TaskStatus}))}>
+                    <SelectTrigger className="col-span-3">
+                        <SelectValue placeholder="Select status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="todo">To Do</SelectItem>
+                        <SelectItem value="inprogress">In Progress</SelectItem>
+                        <SelectItem value="done">Done</SelectItem>
+                        <SelectItem value="blocked">Blocked</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsModalOpen(false)}>Cancel</Button>
+            <Button variant="outline" onClick={() => { setIsModalOpen(false); setNewTask({}); setEditingTask(null); } }>Cancel</Button>
             <Button onClick={handleSaveTask}>Save Task</Button>
           </DialogFooter>
         </DialogContent>
