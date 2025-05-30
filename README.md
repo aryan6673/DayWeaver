@@ -1,10 +1,5 @@
 ![Day Weaver Demo](https://raw.githubusercontent.com/aryan6673/DayWeaver/master/public/demo.gif)
 
-[![GitHub stars](https://img.shields.io/github/stars/aryan6673/dayweaver?style=social)](https://github.com/aryan6673/dayweaver/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/aryan6673/dayweaver?style=social)](https://github.com/aryan6673/dayweaver/network/members)
-[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
-
 Day Weaver is an intelligent, AI-powered personal assistant designed to help you master your schedule, manage tasks, and enhance your productivity. Built with a modern tech stack, it offers a seamless and intuitive experience for planning and organizing your day.
 
 **Project Link:** [github.com/aryan6673/dayweaver](https://github.com/aryan6673/dayweaver)
