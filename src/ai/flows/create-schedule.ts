@@ -50,42 +50,40 @@ const createSchedulePrompt = ai.definePrompt({
   input: {schema: CreateScheduleInputSchema},
   output: {schema: CreateScheduleOutputSchema},
   prompt: `You are an AI-powered schedule assistant. Your job is to create a smart, segmented schedule with work and rest times based on the user's input.
-  From the generated schedule, you should identify and extract distinct, actionable tasks.
+  From the generated schedule, you MUST identify and extract distinct, actionable tasks.
 
   User's desired schedule: {{{scheduleDescription}}}
 
-  Instructions:
-  1. Generate the overall schedule. This should be returned in the 'scheduleText' field.
-  2. From the generated schedule, extract distinct and actionable tasks.
-     - If the user's input describes a complex plan or multiple activities (e.g., "Plan my study day for JEE"), break down the schedule into several smaller, specific tasks.
-     - If the user's input describes a single event (e.g., "Meeting at 4 PM"), you might generate a single task for that event.
-     - Avoid creating one large task that simply mirrors the schedule text. Instead, aim for granularity where appropriate.
-     - Do not just copy large parts of the schedule text for a task name or description.
-     For each task, provide:
-     - name: A concise and specific name for the task (e.g., "Complete Chapter 3 Math exercises", "Attend Project Phoenix Meeting").
-     - description: (Optional) A brief, helpful description (e.g., "Focus on kinematics formulas.", "Discuss Q3 roadmap.").
-     - category: (Optional) A suggested category like "Study", "Work", "Personal", "Exercise".
-     - priority: (Optional) The priority of the task: 'low', 'medium', or 'high'. Default to 'medium' if unsure.
-     - dueDate: (Optional) A suggested due date in YYYY-MM-DD format if it can be clearly inferred from the schedule description (e.g., if the user mentions "for tomorrow" or "by Friday"). Omit if not clear.
-  3. Return these tasks in the 'tasks' array. This array should contain tasks reflecting the complexity of the input. If no specific tasks can be identified, the 'tasks' array can be empty or omitted.
-  4. Ensure the 'scheduleText' field contains the full, human-readable schedule.
-  5. Ensure the 'tasks' field contains the list of extracted tasks with the specified properties.
+  Instructions for Task Generation:
+  1.  **Critically analyze the user's 'scheduleDescription'.**
+      *   If the input describes a complex plan or multiple activities (e.g., "Plan my study day for JEE"), break down the schedule into several smaller, specific tasks.
+      *   If the input describes a single event but implies multiple steps (e.g., "I have a conference at 6 PM, I have to reach there and then prepare speech"), create separate tasks for each distinct action (e.g., Task 1: "Travel to conference venue", Task 2: "Prepare speech for conference").
+      *   If the user explicitly requests a certain number of tasks (e.g., "...write 2 tasks"), make a strong effort to identify and create that many distinct and meaningful tasks if feasible from the description. Do not ignore this request.
+      *   For very simple, single-action inputs (e.g., "Meeting at 4 PM"), a single task is appropriate.
+  2.  **Task Details:** For each task, provide:
+      *   \\\`name\\\`: A concise and specific name for the task (e.g., "Complete Chapter 3 Math exercises", "Attend Project Phoenix Meeting", "Travel to conference").
+      *   \\\`description\\\`: (Optional) A brief, helpful description (e.g., "Focus on kinematics formulas.", "Discuss Q3 roadmap.", "Allow 30 mins for travel").
+      *   \\\`category\\\`: (Optional) A suggested category like "Study", "Work", "Personal", "Exercise", "Travel".
+      *   \\\`priority\\\`: (Optional) The priority of the task: 'low', 'medium', or 'high'. Default to 'medium' if unsure.
+      *   \\\`dueDate\\\`: (Optional) A suggested due date in YYYY-MM-DD format if it can be clearly inferred from the schedule description. Omit if not clear.
+  3.  **Output Structure:**
+      *   The overall schedule text should be returned in the \\\`scheduleText\\\` field.
+      *   The extracted tasks MUST be returned in the \\\`tasks\\\` array. This array's length should reflect the complexity and distinct actions implied by the user's input. If no specific actionable items are identified despite the user's request, the \\\`tasks\\\` array can be empty or omitted.
 
-  Example for 'tasks' array when input is complex (e.g., "Daily routine for JEE prep"):
+  Example for \\\`tasks\\\` array when input is "I have a presentation at 3 PM on project X, I need to finalize slides and rehearse. Give me 2 tasks.":
   [
-    { "name": "Review Physics Chapter 5", "description": "Focus on kinematics formulas.", "category": "Study", "priority": "high", "dueDate": "2024-08-15" },
-    { "name": "Practice Math Problems - Algebra", "category": "Study", "priority": "high" },
-    { "name": "Chemistry Revision - Organic", "category": "Study", "priority": "medium", "dueDate": "2024-08-16" },
-    { "name": "Short Break - Walk", "category": "Personal", "priority": "low" }
+    { "name": "Finalize Project X Slides", "description": "Review and complete all slides for Project X presentation.", "category": "Work", "priority": "high" },
+    { "name": "Rehearse Project X Presentation", "description": "Practice the presentation delivery.", "category": "Work", "priority": "medium" }
   ]
 
-  Example for 'tasks' array when input is simple (e.g., "Team meeting tomorrow at 10 AM about project Alpha"):
+  Example for \\\`tasks\\\` array when input is "Team meeting tomorrow at 10 AM about project Alpha":
   [
     { "name": "Team Meeting: Project Alpha", "description": "Discuss project Alpha status.", "category": "Work", "priority": "medium", "dueDate": "YYYY-MM-DD (inferred date)" }
   ]
 
-  Focus on creating tasks that are specific and actionable items that can be checked off a to-do list. The granularity of tasks should match the user's input.
-  `,
+  Focus on creating tasks that are specific and actionable items that can be checked off a to-do list.
+  Do not just copy large parts of the schedule text for a task name or description.
+  `
 });
 
 const createScheduleFlow = ai.defineFlow(
@@ -99,4 +97,3 @@ const createScheduleFlow = ai.defineFlow(
     return output!;
   }
 );
-
