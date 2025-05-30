@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, CalendarPlus, ListChecks, BarChart3, Shuffle } from 'lucide-react';
+import { ArrowRight, CalendarPlus, ListChecks, BarChart3, CalendarDays } from 'lucide-react'; // Added CalendarDays, removed Shuffle
 import Image from 'next/image';
 
 export default function DashboardPage() {
@@ -25,6 +25,15 @@ export default function DashboardPage() {
       aiHint: 'task list'
     },
     {
+      title: 'View Your Calendar',
+      description: 'See your tasks and schedule visually on a calendar.',
+      href: '/calendar',
+      icon: <CalendarDays className="h-8 w-8 text-primary" />,
+      cta: 'Open Calendar',
+      image: 'https://placehold.co/600x400.png',
+      aiHint: 'calendar view'
+    },
+    {
       title: 'See Your Progress',
       description: 'Visualize your achievements and time usage with insightful analytics.',
       href: '/analytics',
@@ -33,15 +42,7 @@ export default function DashboardPage() {
       image: 'https://placehold.co/600x400.png',
       aiHint: 'charts data'
     },
-    {
-      title: 'Need to Reschedule?',
-      description: 'Life happens. Dynamically reallocate tasks with AI assistance.',
-      href: '/reallocate',
-      icon: <Shuffle className="h-8 w-8 text-primary" />,
-      cta: 'Reallocate Tasks',
-      image: 'https://placehold.co/600x400.png',
-      aiHint: 'calendar change'
-    },
+    // Removed "Need to Reschedule?" card
   ];
 
   return (

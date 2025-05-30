@@ -6,12 +6,10 @@ import {
   LayoutDashboard,
   CalendarPlus,
   ListChecks,
-  Shuffle,
-  GitFork,
-  Mic,
-  BarChart3,
+  CalendarDays, // Added for Calendar
   Settings,
   LifeBuoy,
+  // Removed Shuffle, GitFork, Mic
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
@@ -26,9 +24,8 @@ const mainNavItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/schedule/create', label: 'Create Schedule', icon: CalendarPlus },
   { href: '/tasks', label: 'My Tasks', icon: ListChecks },
-  { href: '/reallocate', label: 'Reallocate Tasks', icon: Shuffle },
-  { href: '/breakdown', label: 'Breakdown Task', icon: GitFork },
-  { href: '/meeting-prep', label: 'Meeting Prep', icon: Mic },
+  { href: '/calendar', label: 'Calendar', icon: CalendarDays }, // Added Calendar
+  // Removed Reallocate Tasks, Breakdown Task, Meeting Prep
   { href: '/analytics', label: 'Analytics', icon: BarChart3 },
 ];
 
