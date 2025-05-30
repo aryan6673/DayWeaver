@@ -11,6 +11,9 @@ import { AuthProvider } from '@/components/auth/auth-provider';
 export const metadata: Metadata = {
   title: 'Day Weaver',
   description: 'Your day. Your goals. No stress. Let AI handle the mess.',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
