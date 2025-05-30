@@ -1,4 +1,4 @@
-![Day Weaver Demo](public/demo32.gif)
+![Day Weaver Demo](https://raw.githubusercontent.com/aryan6673/DayWeaver/master/public/demo34.gif)
 
 Day Weaver is an intelligent, AI-powered personal assistant designed to help you master your schedule, manage tasks, and enhance your productivity. Built with a modern tech stack, it offers a seamless and intuitive experience for planning and organizing your day.
 
