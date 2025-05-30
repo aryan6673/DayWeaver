@@ -1,3 +1,4 @@
+
 export type TaskStatus = 'todo' | 'inprogress' | 'done' | 'blocked';
 
 export interface SubTask {
@@ -25,4 +26,12 @@ export interface CurrentTaskInput {
   name: string;
   dueDate: string; // ISO format (YYYY-MM-DD)
   duration: number; // hours
+}
+
+// Firebase User
+export interface FirebaseUser {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+  photoURL?: string | null;
 }

@@ -14,20 +14,23 @@ import { useAuth } from '@/hooks/use-auth';
 import { IconSpinner } from '@/components/icons';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Separator } from '@/components/ui/separator';
-import { Github, Chrome } from 'lucide-react'; // Using Chrome for Google icon
+import { Github, Chrome } from 'lucide-react';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address.' }),
   password: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
+  confirmPassword: z.string().min(6, { message: 'Password must be at least 6 characters.' })
+}).refine(data => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"], // path of error
 });
 
-export default function LoginPage() {
+export default function SignupPage() {
   const [isSubmittingEmail, setIsSubmittingEmail] = useState(false);
   const [isSubmittingGoogle, setIsSubmittingGoogle] = useState(false);
   const [isSubmittingGitHub, setIsSubmittingGitHub] = useState(false);
   const { toast } = useToast();
-  const { loginWithEmail, signInWithGoogle, signInWithGitHub, user, isLoading: authIsLoading } = useAuth();
+  const { signupWithEmail, signInWithGoogle, signInWithGitHub, user, isLoading: authIsLoading } = useAuth();
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -35,6 +38,7 @@ export default function LoginPage() {
     defaultValues: {
       email: '',
       password: '',
+      confirmPassword: '',
     },
   });
 
@@ -47,16 +51,16 @@ export default function LoginPage() {
   async function onEmailSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmittingEmail(true);
     try {
-      await loginWithEmail(values.email, values.password);
+      await signupWithEmail(values.email, values.password);
       toast({
-        title: 'Login Successful!',
-        description: 'Welcome back!',
+        title: 'Signup Successful!',
+        description: 'Welcome to Day Weaver!',
       });
       // Redirect is handled by AuthProvider or useEffect
     } catch (error) {
       toast({
         variant: 'destructive',
-        title: 'Login Failed',
+        title: 'Signup Failed',
         description: error instanceof Error ? error.message : 'An unknown error occurred.',
       });
     } finally {
@@ -69,13 +73,13 @@ export default function LoginPage() {
     try {
       await signInWithGoogle();
       toast({
-        title: 'Google Sign-In Successful!',
+        title: 'Google Sign-Up Successful!',
         description: 'Welcome!',
       });
     } catch (error) {
       toast({
         variant: 'destructive',
-        title: 'Google Sign-In Failed',
+        title: 'Google Sign-Up Failed',
         description: error instanceof Error ? error.message : 'An unknown error occurred.',
       });
     } finally {
@@ -88,20 +92,20 @@ export default function LoginPage() {
     try {
       await signInWithGitHub();
       toast({
-        title: 'GitHub Sign-In Successful!',
+        title: 'GitHub Sign-Up Successful!',
         description: 'Welcome!',
       });
     } catch (error) {
       toast({
         variant: 'destructive',
-        title: 'GitHub Sign-In Failed',
+        title: 'GitHub Sign-Up Failed',
         description: error instanceof Error ? error.message : 'An unknown error occurred.',
       });
     } finally {
       setIsSubmittingGitHub(false);
     }
   }
-  
+
   if (authIsLoading || (!authIsLoading && user)) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
@@ -109,15 +113,15 @@ export default function LoginPage() {
       </div>
     );
   }
-
+  
   const isAnySubmitting = isSubmittingEmail || isSubmittingGoogle || isSubmittingGitHub;
 
   return (
     <Card className="w-full shadow-xl">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl">Welcome Back!</CardTitle>
+        <CardTitle className="text-2xl">Create an Account</CardTitle>
         <CardDescription>
-          Log in to your Day Weaver account.
+          Join Day Weaver and start planning your days effectively.
         </CardDescription>
       </CardHeader>
       <Form {...form}>
@@ -128,10 +132,10 @@ export default function LoginPage() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="email">Email</FormLabel>
+                  <FormLabel htmlFor="email-signup">Email</FormLabel>
                   <FormControl>
                     <Input
-                      id="email"
+                      id="email-signup"
                       type="email"
                       placeholder="you@example.com"
                       className="text-base"
@@ -148,10 +152,10 @@ export default function LoginPage() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="password">Password</FormLabel>
+                  <FormLabel htmlFor="password-signup">Password</FormLabel>
                   <FormControl>
                     <Input
-                      id="password"
+                      id="password-signup"
                       type="password"
                       placeholder="••••••••"
                       className="text-base"
@@ -163,14 +167,34 @@ export default function LoginPage() {
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={isAnySubmitting} size="lg" className="w-full">
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="confirmPassword-signup">Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      id="confirmPassword-signup"
+                      type="password"
+                      placeholder="••••••••"
+                      className="text-base"
+                      {...field}
+                      disabled={isAnySubmitting}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <Button type="submit" disabled={isAnySubmitting} size="lg" className="w-full">
               {isSubmittingEmail ? (
                 <>
                   <IconSpinner className="mr-2 h-5 w-5" />
-                  Logging In...
+                  Signing Up...
                 </>
               ) : (
-                'Log In with Email'
+                'Sign Up with Email'
               )}
             </Button>
             
@@ -180,7 +204,7 @@ export default function LoginPage() {
               </div>
               <div className="relative flex justify-center text-xs uppercase">
                 <span className="bg-background px-2 text-muted-foreground">
-                  Or continue with
+                  Or sign up with
                 </span>
               </div>
             </div>
@@ -198,9 +222,9 @@ export default function LoginPage() {
           </CardContent>
           <CardFooter className="flex flex-col gap-4">
             <p className="text-sm text-muted-foreground">
-              Don&apos;t have an account?{' '}
-              <Link href="/signup" className="font-medium text-primary hover:underline">
-                Sign up
+              Already have an account?{' '}
+              <Link href="/login" className="font-medium text-primary hover:underline">
+                Log in
               </Link>
             </p>
           </CardFooter>

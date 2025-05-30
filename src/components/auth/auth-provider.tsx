@@ -2,75 +2,116 @@
 'use client';
 
 import React, { createContext, useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+import { 
+  onAuthStateChanged, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  GoogleAuthProvider, 
+  GithubAuthProvider, 
+  signInWithPopup, 
+  signOut as firebaseSignOut,
+  type User as FirebaseUserType // Renaming to avoid conflict with our User type
+} from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 import { IconSpinner } from '@/components/icons';
-
-interface User {
-  id: string;
-  email: string;
-  name: string;
-}
+import type { FirebaseUser } from '@/types';
 
 export interface AuthContextType {
-  user: User | null;
-  login: (email: string)  => Promise<void>;
+  user: FirebaseUser | null;
+  loginWithEmail: (email: string, password: string) => Promise<void>;
+  signupWithEmail: (email: string, password: string) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
+  signInWithGitHub: () => Promise<void>;
   logout: () => void;
   isLoading: boolean;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const AUTH_STORAGE_KEY = 'dayweaver-auth-token';
-
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<FirebaseUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
-    const token = localStorage.getItem(AUTH_STORAGE_KEY);
-    if (token) {
-      // In a real app, you'd validate the token with a backend
-      // For mock purposes, if a token exists, we assume the user is logged in
-      setUser({ id: '1', email: 'user@example.com', name: 'Day Weaver User' });
-    }
-    setIsLoading(false);
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser: FirebaseUserType | null) => {
+      if (firebaseUser) {
+        setUser({
+          uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          displayName: firebaseUser.displayName,
+          photoURL: firebaseUser.photoURL,
+        });
+      } else {
+        setUser(null);
+      }
+      setIsLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
-  const login = useCallback(async (email: string) => {
-    setIsLoading(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 500));
-    const mockUser: User = { id: '1', email, name: 'Day Weaver User' };
-    localStorage.setItem(AUTH_STORAGE_KEY, 'mock-user-token');
-    setUser(mockUser);
-    setIsLoading(false);
+  const handleAuthSuccess = (firebaseUser: FirebaseUserType) => {
+    setUser({
+      uid: firebaseUser.uid,
+      email: firebaseUser.email,
+      displayName: firebaseUser.displayName,
+      photoURL: firebaseUser.photoURL,
+    });
     router.push('/dashboard');
+  };
+
+  const loginWithEmail = useCallback(async (email: string, password: string) => {
+    setIsLoading(true);
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    handleAuthSuccess(userCredential.user);
+    setIsLoading(false);
   }, [router]);
 
-  const logout = useCallback(() => {
-    localStorage.removeItem(AUTH_STORAGE_KEY);
+  const signupWithEmail = useCallback(async (email: string, password: string) => {
+    setIsLoading(true);
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    handleAuthSuccess(userCredential.user);
+    setIsLoading(false);
+  }, [router]);
+
+  const signInWithGoogle = useCallback(async () => {
+    setIsLoading(true);
+    const provider = new GoogleAuthProvider();
+    const userCredential = await signInWithPopup(auth, provider);
+    handleAuthSuccess(userCredential.user);
+    setIsLoading(false);
+  }, [router]);
+
+  const signInWithGitHub = useCallback(async () => {
+    setIsLoading(true);
+    const provider = new GithubAuthProvider();
+    const userCredential = await signInWithPopup(auth, provider);
+    handleAuthSuccess(userCredential.user);
+    setIsLoading(false);
+  }, [router]);
+
+  const logout = useCallback(async () => {
+    setIsLoading(true);
+    await firebaseSignOut(auth);
     setUser(null);
     router.push('/login');
+    setIsLoading(false);
   }, [router]);
-
-  if (isLoading && !user) {
-    // Show a global loading spinner only during initial auth check
-    // Or you could return null and let individual pages handle their loading state
-     const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
-     // Only show full page loader if not on login page already to prevent loader flash on login page
-     if (pathname !== '/login') {
-        return (
-            <div className="flex min-h-screen items-center justify-center bg-background">
-                <IconSpinner className="h-10 w-10 text-primary" />
-            </div>
-        );
-     }
+  
+  // Show loader on initial load or if navigating away from auth pages while still loading
+  if (isLoading && !pathname.startsWith('/login') && !pathname.startsWith('/signup')) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <IconSpinner className="h-10 w-10 text-primary" />
+      </div>
+    );
   }
 
-
   return (
-    <AuthContext.Provider value={{ user, login, logout, isLoading }}>
+    <AuthContext.Provider value={{ user, loginWithEmail, signupWithEmail, signInWithGoogle, signInWithGitHub, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

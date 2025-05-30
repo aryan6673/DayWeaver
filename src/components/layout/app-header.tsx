@@ -13,12 +13,28 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Logo } from '@/components/icons';
+import { Logo, IconSpinner } from '@/components/icons'; // Added IconSpinner
 import { Settings, User, LogOut, LogIn } from 'lucide-react';
 import { useAuth } from '@/hooks/use-auth';
 
 export function AppHeader() {
   const { user, logout, isLoading } = useAuth();
+
+  // Function to get initials from display name or email
+  const getInitials = (displayName: string | null | undefined, email: string | null | undefined): string => {
+    if (displayName) {
+      const names = displayName.split(' ');
+      if (names.length > 1) {
+        return `${names[0][0]}${names[names.length - 1][0]}`.toUpperCase();
+      }
+      return displayName.substring(0, 2).toUpperCase();
+    }
+    if (email) {
+      return email.substring(0, 2).toUpperCase();
+    }
+    return 'DW'; // Default Day Weaver
+  };
+
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -31,24 +47,30 @@ export function AppHeader() {
         <SidebarTrigger className="md:hidden" />
         <div className="flex flex-1 items-center justify-end space-x-4">
           {isLoading ? (
-            <div className="h-8 w-8 rounded-full bg-muted animate-pulse" />
+             <IconSpinner className="h-6 w-6 text-primary" />
           ) : user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src="https://placehold.co/40x40.png" alt="User Avatar" data-ai-hint="profile avatar" />
-                    <AvatarFallback>{user.name ? user.name.substring(0,2).toUpperCase() : 'DW'}</AvatarFallback>
+                <Button variant="ghost" className="relative h-9 w-9 rounded-full">
+                  <Avatar className="h-9 w-9">
+                    {user.photoURL ? (
+                      <AvatarImage src={user.photoURL} alt={user.displayName || user.email || 'User Avatar'} data-ai-hint="profile avatar" />
+                    ) : (
+                       <AvatarImage src="https://placehold.co/40x40.png" alt="User Avatar" data-ai-hint="profile avatar" />
+                    )}
+                    <AvatarFallback>{getInitials(user.displayName, user.email)}</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="end" forceMount>
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium leading-none">{user.name || 'Day Weaver User'}</p>
-                    <p className="text-xs leading-none text-muted-foreground">
-                      {user.email}
-                    </p>
+                    <p className="text-sm font-medium leading-none">{user.displayName || 'Day Weaver User'}</p>
+                    {user.email && (
+                       <p className="text-xs leading-none text-muted-foreground">
+                        {user.email}
+                      </p>
+                    )}
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
