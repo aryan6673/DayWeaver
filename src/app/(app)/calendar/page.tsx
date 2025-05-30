@@ -1,3 +1,4 @@
+
 import { CalendarView } from '@/components/calendar/calendar-view';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
@@ -8,7 +9,7 @@ export default function CalendarPage() {
         <CardHeader>
           <CardTitle className="text-3xl font-bold">My Calendar</CardTitle>
           <CardDescription className="text-lg">
-            Visualize your tasks and deadlines.
+            View and manage your important dates.
           </CardDescription>
         </CardHeader>
       </Card>
