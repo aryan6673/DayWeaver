@@ -1,8 +1,8 @@
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, CalendarPlus, ListChecks, BarChart3, CalendarDays } from 'lucide-react'; // Added CalendarDays, removed Shuffle
-import Image from 'next/image';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { ArrowRight, CalendarPlus, ListChecks, BarChart3, CalendarDays } from 'lucide-react';
 
 export default function DashboardPage() {
   const features = [
@@ -10,85 +10,64 @@ export default function DashboardPage() {
       title: 'Create Your Schedule',
       description: 'Let AI craft your perfect day. Just tell us your goals.',
       href: '/schedule/create',
-      icon: <CalendarPlus className="h-8 w-8 text-primary" />,
+      icon: <CalendarPlus className="h-10 w-10 text-primary mb-4" />, // Increased icon size and added margin
       cta: 'Start Planning',
-      image: 'https://placehold.co/600x400.png',
-      aiHint: 'planning schedule'
     },
     {
       title: 'Manage Your Tasks',
       description: 'View, update, and track your daily to-dos effortlessly.',
       href: '/tasks',
-      icon: <ListChecks className="h-8 w-8 text-primary" />,
+      icon: <ListChecks className="h-10 w-10 text-primary mb-4" />,
       cta: 'View Tasks',
-      image: 'https://placehold.co/600x400.png',
-      aiHint: 'task list'
     },
     {
       title: 'View Your Calendar',
-      description: 'See your tasks and schedule visually on a calendar.',
+      description: 'See your important dates visually on a calendar.',
       href: '/calendar',
-      icon: <CalendarDays className="h-8 w-8 text-primary" />,
+      icon: <CalendarDays className="h-10 w-10 text-primary mb-4" />,
       cta: 'Open Calendar',
-      image: 'https://placehold.co/600x400.png',
-      aiHint: 'calendar view'
     },
     {
       title: 'See Your Progress',
       description: 'Visualize your achievements and time usage with insightful analytics.',
       href: '/analytics',
-      icon: <BarChart3 className="h-8 w-8 text-primary" />,
+      icon: <BarChart3 className="h-10 w-10 text-primary mb-4" />,
       cta: 'View Analytics',
-      image: 'https://placehold.co/600x400.png',
-      aiHint: 'charts data'
     },
-    // Removed "Need to Reschedule?" card
   ];
 
   return (
     <div className="space-y-8">
-      <Card className="shadow-lg">
+      <Card className="shadow-lg border-primary/20">
         <CardHeader>
-          <CardTitle className="text-3xl font-bold">Welcome to Day Weaver!</CardTitle>
-          <CardDescription className="text-lg">
+          <CardTitle className="text-3xl font-bold text-primary">Welcome to Day Weaver!</CardTitle>
+          <CardDescription className="text-lg text-foreground/80">
             Your day, your goals, no stress. Let AI handle the mess.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <p>
+          <p className="text-foreground/90">
             Day Weaver is your intelligent assistant for mastering your schedule. 
             Create, adapt, and visualize your plans with the power of AI.
           </p>
         </CardContent>
       </Card>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2"> {/* Adjusted grid to 2 columns for better spacing */}
         {features.map((feature) => (
-          <Card key={feature.title} className="flex flex-col shadow-md hover:shadow-lg transition-shadow duration-300">
-            <div className="relative h-48 w-full">
-              <Image 
-                src={feature.image} 
-                alt={feature.title} 
-                layout="fill" 
-                objectFit="cover" 
-                className="rounded-t-lg"
-                data-ai-hint={feature.aiHint}
-              />
-            </div>
-            <CardHeader className="flex-grow">
-              <div className="flex items-center space-x-3 mb-2">
-                {feature.icon}
-                <CardTitle>{feature.title}</CardTitle>
-              </div>
-              <CardDescription>{feature.description}</CardDescription>
+          <Card key={feature.title} className="flex flex-col shadow-md hover:shadow-lg transition-shadow duration-300 rounded-xl overflow-hidden border-border/50">
+            <CardHeader className="flex-grow p-6 items-center text-center"> {/* Centered content */}
+              {feature.icon}
+              <CardTitle className="text-xl font-semibold">{feature.title}</CardTitle>
+              <CardDescription className="mt-2 text-sm text-muted-foreground">{feature.description}</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardFooter className="p-6 bg-muted/30"> {/* Moved button to CardFooter for distinct section */}
               <Button asChild className="w-full">
                 <Link href={feature.href}>
                   {feature.cta} <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-            </CardContent>
+            </CardFooter>
           </Card>
         ))}
       </div>
