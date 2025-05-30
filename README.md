@@ -89,6 +89,6 @@ Distributed under the MIT License. See `LICENSE` file for more information. (Not
 
 ## 🏆 Acknowledgements & Ownership
 
-This project, Day Weaver, is envisioned, developed, and maintained by **Aryan Sharma ([@aryan6673](https://github.com/aryan6673))**. All credit for the concept and core development goes to him.
+This project, Day Weaver, is envisioned, developed, and maintained by **Aryan Singh ([@aryan6673](https://github.com/aryan6673))**. All credit for the concept and core development goes to him.
 
 A big thank you to the open-source community for the tools and libraries that make projects like this possible!
