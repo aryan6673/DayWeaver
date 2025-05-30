@@ -1,5 +1,10 @@
+
 import { config } from 'dotenv';
 config();
 
 import '@/ai/flows/create-schedule.ts';
-// Removed imports for dynamic-task-reallocation, intelligent-task-breakdown, and speech-meeting-aware
+import '@/ai/flows/analyze-time-usage.ts';
+import '@/ai/flows/calculate-efficiency-score.ts';
+import '@/ai/flows/predict-burnout.ts';
+
+    
