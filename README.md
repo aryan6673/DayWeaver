@@ -1,5 +1,4 @@
-
-# Day Weaver  weaving your day, your goals, no stress. Let AI handle the mess.
+![Day Weaver Demo](https://raw.githubusercontent.com/aryan6673/DayWeaver/master/public/demo.gif)
 
 [![GitHub stars](https://img.shields.io/github/stars/aryan6673/dayweaver?style=social)](https://github.com/aryan6673/dayweaver/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/aryan6673/dayweaver?style=social)](https://github.com/aryan6673/dayweaver/network/members)
