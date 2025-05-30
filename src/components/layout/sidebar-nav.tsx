@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -9,6 +10,7 @@ import {
   CalendarDays, // Added for Calendar
   Settings,
   LifeBuoy,
+  BarChart3, // Added BarChart3 import
   // Removed Shuffle, GitFork, Mic
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
