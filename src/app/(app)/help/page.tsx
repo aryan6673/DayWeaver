@@ -12,7 +12,7 @@ export default function HelpPage() {
         <CardHeader>
           <CardTitle className="text-3xl font-bold">Help & Support</CardTitle>
           <CardDescription className="text-lg">
-            Find answers to your questions and get help with Day Weaver.
+            Get assistance with Day Weaver.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -21,7 +21,7 @@ export default function HelpPage() {
         <CardHeader>
           <CardTitle>Contact Support</CardTitle>
           <CardDescription>
-            If you need further assistance, please don't hesitate to reach out to our support team.
+            If you need further assistance, please don't hesitate to reach out.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -31,23 +31,6 @@ export default function HelpPage() {
               Mail Customer Support
             </a>
           </Button>
-          <p className="text-sm text-muted-foreground mt-4">
-            Or email us directly at: <a href={`mailto:${supportEmail}`} className="underline text-primary">{supportEmail}</a>
-          </p>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Frequently Asked Questions (FAQ)</CardTitle>
-          <CardDescription>
-            Browse common questions and answers. (Coming Soon)
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">
-            Our FAQ section is currently under development. Please check back later or contact support if you have immediate questions.
-          </p>
         </CardContent>
       </Card>
     </div>
