@@ -1,6 +1,6 @@
 ![Day Weaver Demo](https://raw.githubusercontent.com/aryan6673/DayWeaver/master/public/demo34.gif)
 
-Day Weaver is an AI-integrated productivity tool that helps users organize their day, prioritize tasks, and optimize time management through intelligent scheduling. Powered by AI algorithms, it dynamically suggests daily plans based on task urgency, deadlines, estimated durations, and user preferences. Ideal for students, professionals, and productivity nerds.
+DeyWeaver is an AI-integrated productivity tool that helps users organize their day, prioritize tasks, and optimize time management through intelligent scheduling. Powered by AI algorithms, it dynamically suggests daily plans based on task urgency, deadlines, estimated durations, and user preferences. Ideal for students, professionals, and productivity nerds.
 
 
 ## ✨ Features
