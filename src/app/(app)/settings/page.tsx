@@ -8,7 +8,7 @@ export default function SettingsPage() {
         <CardHeader>
           <CardTitle className="text-3xl font-bold">Settings</CardTitle>
           <CardDescription className="text-lg">
-            Customize your Day Weaver experience.
+            Customize your Dey Weaver experience.
           </CardDescription>
         </CardHeader>
       </Card>

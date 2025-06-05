@@ -12,7 +12,7 @@ export default function HelpPage() {
         <CardHeader>
           <CardTitle className="text-3xl font-bold">Help & Support</CardTitle>
           <CardDescription className="text-lg">
-            Get assistance with Day Weaver.
+            Get assistance with Dey Weaver.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -26,7 +26,7 @@ export default function HelpPage() {
         </CardHeader>
         <CardContent>
           <Button asChild size="lg">
-            <a href={`mailto:${supportEmail}?subject=Day Weaver Support Request`}>
+            <a href={`mailto:${supportEmail}?subject=Dey Weaver Support Request`}>
               <Mail className="mr-2 h-5 w-5" />
               Mail Customer Support
             </a>

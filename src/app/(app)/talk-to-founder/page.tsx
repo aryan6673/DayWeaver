@@ -13,7 +13,7 @@ export default function TalkToFounderPage() {
         <CardHeader>
           <CardTitle className="text-3xl font-bold">Talk to the Founder</CardTitle>
           <CardDescription className="text-lg">
-            Share your thoughts and help shape Day Weaver.
+            Share your thoughts and help shape Dey Weaver.
           </CardDescription>
         </CardHeader>
       </Card>

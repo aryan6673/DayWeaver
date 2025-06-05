@@ -114,7 +114,7 @@ export function CreateScheduleForm() {
       <CardHeader>
         <CardTitle className="text-2xl">AI Schedule Creator</CardTitle>
         <CardDescription>
-          Describe your ideal schedule, and let Day Weaver AI craft it for you.
+          Describe your ideal schedule, and let Dey Weaver AI craft it for you.
           Tasks identified by the AI (including priority and due date if applicable) will be automatically added to your "My Tasks" page.
           Try something like: "Create a daily routine for a freelance writer working from home, who needs to finish a draft by Friday."
           or "Plan my study schedule for upcoming final exams in Math (high priority) and Physics (medium priority) next week."

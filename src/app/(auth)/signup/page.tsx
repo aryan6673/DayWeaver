@@ -54,7 +54,7 @@ export default function SignupPage() {
       await signupWithEmail(values.email, values.password);
       toast({
         title: 'Signup Successful!',
-        description: 'Welcome to Day Weaver!',
+        description: 'Welcome to Dey Weaver!',
       });
       // Redirect is handled by AuthProvider or useEffect
     } catch (error) {
@@ -121,7 +121,7 @@ export default function SignupPage() {
       <CardHeader className="text-center">
         <CardTitle className="text-2xl">Create an Account</CardTitle>
         <CardDescription>
-          Join Day Weaver and start planning your days effectively.
+          Join Dey Weaver and start planning your days effectively.
         </CardDescription>
       </CardHeader>
       <Form {...form}>

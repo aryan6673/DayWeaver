@@ -22,7 +22,7 @@ export function AppSidebar() {
       <SidebarHeader className="p-4 md:p-2 items-center md:bg-transparent">
         <Link href="/dashboard" className="block md:hidden group-data-[collapsible=icon]:block">
           <Logo className="h-8 w-auto fill-primary" />
-          <span className="sr-only">Day Weaver Home</span>
+          <span className="sr-only">Dey Weaver Home</span>
         </Link>
         <Link href="/dashboard" className="hidden md:block group-data-[collapsible=icon]:hidden">
           <Logo className="h-8 w-auto" />

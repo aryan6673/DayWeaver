@@ -117,7 +117,7 @@ export default function LoginPage() {
       <CardHeader className="text-center">
         <CardTitle className="text-2xl">Welcome Back!</CardTitle>
         <CardDescription>
-          Log in to your Day Weaver account.
+          Log in to your Dey Weaver account.
         </CardDescription>
       </CardHeader>
       <Form {...form}>

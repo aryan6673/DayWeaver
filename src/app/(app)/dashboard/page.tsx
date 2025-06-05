@@ -40,14 +40,14 @@ export default function DashboardPage() {
     <div className="space-y-8">
       <Card className="shadow-lg border-primary/20">
         <CardHeader>
-          <CardTitle className="text-3xl font-bold text-primary">Welcome to Day Weaver!</CardTitle>
+          <CardTitle className="text-3xl font-bold text-primary">Welcome to Dey Weaver!</CardTitle>
           <CardDescription className="text-lg text-foreground/80">
             Your day, your goals, no stress. Let AI handle the mess.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <p className="text-foreground/90">
-            Day Weaver is your intelligent assistant for mastering your schedule. 
+            Dey Weaver is your intelligent assistant for mastering your schedule. 
             Create, adapt, and visualize your plans with the power of AI.
           </p>
         </CardContent>

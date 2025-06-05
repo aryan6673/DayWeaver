@@ -1,4 +1,4 @@
-# **App Name**: Day Weaver
+# **App Name**: Dey Weaver
 
 ## Core Features:
 

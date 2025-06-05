@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-We are committed to ensuring the security of Day Weaver. Security updates and patches will be applied to the latest version of the application available on the `main` branch.
+We are committed to ensuring the security of Dey Weaver. Security updates and patches will be applied to the latest version of the application available on the `main` branch.
 
 | Version | Supported          |
 | ------- | ------------------ |
@@ -10,7 +10,7 @@ We are committed to ensuring the security of Day Weaver. Security updates and pa
 
 ## Reporting a Vulnerability
 
-The Day Weaver team and community take all security vulnerabilities seriously. We appreciate your efforts to responsibly disclose your findings, and will make every effort to acknowledge your contributions.
+The Dey Weaver team and community take all security vulnerabilities seriously. We appreciate your efforts to responsibly disclose your findings, and will make every effort to acknowledge your contributions.
 
 To report a security vulnerability, please email Aryan Singh directly at **aryanbrite@gmail.com**.
 
@@ -32,4 +32,4 @@ When reporting a vulnerability, please include the following details:
 *   We will keep you informed of our progress.
 *   We will publicly acknowledge your contribution (if you wish) once the vulnerability has been fixed.
 
-Thank you for helping keep Day Weaver secure!
+Thank you for helping keep Dey Weaver secure!
