@@ -46,7 +46,7 @@ body {
   }
 
   .dark {
-    /* Dark theme adaptation of Day Weaver colors */
+    /* Dark theme adaptation of Dey Weaver colors */
     --background: 48 10% 10%; /* Dark Gold/Brown */
     --foreground: 48 20% 90%; /* Light Desaturated Gold */
     --card: 48 10% 15%; 

@@ -32,7 +32,7 @@ export function AppHeader() {
     if (email) {
       return email.substring(0, 2).toUpperCase();
     }
-    return 'DW'; // Default Day Weaver
+    return 'DW'; // Default Dey Weaver
   };
 
 
@@ -65,7 +65,7 @@ export function AppHeader() {
               <DropdownMenuContent className="w-56" align="end" forceMount>
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium leading-none">{user.displayName || 'Day Weaver User'}</p>
+                    <p className="text-sm font-medium leading-none">{user.displayName || 'Dey Weaver User'}</p>
                     {user.email && (
                        <p className="text-xs leading-none text-muted-foreground">
                         {user.email}

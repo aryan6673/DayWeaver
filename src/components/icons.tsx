@@ -7,7 +7,7 @@ export function Logo(props: SVGProps<SVGSVGElement>) {
       viewBox="0 0 200 50"
       width="120"
       height="30"
-      aria-label="Day Weaver Logo"
+      aria-label="Dey Weaver Logo"
       {...props}
     >
       <defs>
@@ -25,7 +25,7 @@ export function Logo(props: SVGProps<SVGSVGElement>) {
         fontWeight="bold"
         fill="url(#goldGradient)"
       >
-        Day Weaver
+        Dey Weaver
       </text>
     </svg>
   );
