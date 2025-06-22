@@ -78,7 +78,8 @@ Don't forget to give the project a star! Thanks again!
 
 ## 📜 License
 
-Distributed under the MIT License. See `LICENSE` file for more information. (Note: You'll need to add a LICENSE file to your repository - MIT is a good default for open source projects).
+This project is licensed under the [MIT License](LICENSE).  
+© Aryan6673 — aryanbrite@gmail.com
 
 ## 🏆 Acknowledgements & Ownership
 
