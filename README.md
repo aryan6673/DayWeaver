@@ -85,3 +85,33 @@ Distributed under the MIT License. See `LICENSE` file for more information. (Not
 This project, dey Weaver, is envisioned, developed, and maintained by **Aryan Singh ([@aryan6673](https://github.com/aryan6673))**. All credit for the concept and core development goes to him.
 
 A big thank you to the open-source community for the tools and libraries that make projects like this possible!
+
+---
+
+## Powered By
+
+[![Our Valued Supporters](https://raw.githubusercontent.com/aryan6673/DeyWeaver/refs/heads/master/public/Untitled%20design.png)]()
+
+This project is made possible by the generous funding and support from these amazing companies, helping this project to be free forever and open-source:
+
+* **Google:** We are grateful to Google for their support towards **early-stage AI-first startups with equity funding**, which has been foundational for this project.
+
+* **Google Cloud:** Our deepest thanks to Google Cloud for their substantial support, including:
+    * **Year 1:** 100% up to **$250,000 USD in Google Cloud credits** (includes standard program credits plus an additional $150,000 USD for the AI startup program).
+    * **Year 2:** 20% up to an additional **$100,000 USD in Google Cloud credits**.
+    * **Enhanced Support:** **$12,000 USD in Google Cloud Enhanced Support credits** for one year.
+    * **Google Workspace Business Plus:** 12 months of free Google Workspace Business Plus for new signups.
+
+* **Gemini (Google AI):** We specifically thank Gemini for the **API expenses of Gemini 2.5 Pro (beta)**, integral to our vision of testing and which has mutually benefited both Google and our project. Additionally, as Scale tier members, we can utilize existing credits on Google Gemini and Vertex AI open models. As AI Tier startups, we also receive **$10,000 USD exclusively for partner LLM models** through Model Garden, including Anthropic, Mistral, and AI21.
+
+* **Firebase:** For providing a **premium account**, essential for maintaining the legacy of the project and ensuring fast authentication and reliable storage.
+
+* **Name.com:** Our gratitude to Name.com for providing a **free domain name** to this open-source project, a collaboration made possible through GitHub Education.
+
+* **GitHub:** Thanks to GitHub for providing a **free GitHub Pro account** to the maintainer, which significantly boosted our workflow with faster GitHub Actions, serving as an incredibly fast preview environment. We also appreciate their role in collaborating with Name.com for the domain and **connecting our project to the broader open-source community in Delhi, India**.
+
+* **Vercel:** A big thank you to Vercel for giving us a **free premium account** for deploying this project to the live internet, ensuring speed and reliability.
+
+* **Notion:** We thank Notion for their guidance, helping us build a simpler planner experience, and for generously providing **free Notion Premium accounts to all the maintainers**.
+
+---
