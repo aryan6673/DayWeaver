@@ -1,13 +1,13 @@
 ![dey Weaver Demo](https://raw.githubusercontent.com/aryan6673/deyWeaver/master/public/demo34.gif)
 
-DeyWeaver is an AI-integrated productivity tool that helps users organize their dey, prioritize tasks, and optimize time management through intelligent scheduling. Powered by AI algorithms, it dynamically suggests daily plans based on task urgency, deadlines, estimated durations, and user preferences. Ideal for students, professionals, and productivity nerds.
+DeyWeaver is an AI-integrated productivity tool that helps users organize their day, prioritize tasks, and optimize time management through intelligent scheduling. Powered by AI algorithms, it dynamically suggests daily plans based on task urgency, deadlines, estimated durations, and user preferences. Ideal for students, professionals, and productivity nerds.
 
 
 ## ✨ Features
 
 dey Weaver comes packed with features to help you stay organized and achieve your goals:
 
-*    **AI-Powered Schedule Creation:** Describe your ideal dey or goals in natural language, and let our AI craft a smart, segmented schedule with work and rest times.
+*    **AI-Powered Schedule Creation:** Describe your ideal day or goals in natural language, and let our AI craft a smart, segmented schedule with work and rest times.
 *    **Comprehensive Task Management:** Create, view, update, delete, and track your daily to-dos. Filter tasks by status, priority, and search terms.
 *    **Intelligent Task Breakdown:** Input a large task and its deadline, and AI will break it down into manageable sub-tasks with estimated time allocations.
 *    **Dynamic Task Reallocation:** Life happens! If you need to reschedule, tell AI the reason, provide your current tasks, and it will intelligently reallocate them to new slots.
